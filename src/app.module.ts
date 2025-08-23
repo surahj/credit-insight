@@ -10,6 +10,7 @@ import { HealthModule } from './health/health.module';
 import { StatementsModule } from './statements/statements.module';
 import { InsightsModule } from './insights/insights.module';
 import { BureauModule } from './bureau/bureau.module';
+import { MockBureauModule } from './mock-bureau/mock-bureau.module';
 import { SecurityInterceptor } from './common/interceptors/security.interceptor';
 
 @Module({
@@ -47,6 +48,7 @@ import { SecurityInterceptor } from './common/interceptors/security.interceptor'
     StatementsModule,
     InsightsModule,
     BureauModule,
+    MockBureauModule,
   ],
   controllers: [AppController],
   providers: [

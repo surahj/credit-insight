@@ -165,17 +165,6 @@ export class BureauService {
     await this.bureauReportRepository.delete(reportId);
   }
 
-  async getBureauHealthStatus(): Promise<{
-    isHealthy: boolean;
-    lastChecked: Date;
-  }> {
-    const isHealthy = await this.bureauHttpClient.healthCheck();
-    return {
-      isHealthy,
-      lastChecked: new Date(),
-    };
-  }
-
   private mapRiskBand(riskBandString: string): RiskBand {
     const mapping: Record<string, RiskBand> = {
       excellent: RiskBand.EXCELLENT,

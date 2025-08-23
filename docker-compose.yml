@@ -23,21 +23,6 @@ services:
       retries: 5
       start_period: 30s
 
-  # Mock Credit Bureau API
-  mock-bureau:
-    build:
-      context: ./mock-bureau-api
-      dockerfile: Dockerfile
-    container_name: mock-credit-bureau
-    restart: unless-stopped
-    environment:
-      NODE_ENV: production
-      PORT: 3001
-    ports:
-      - '3001:3001'
-    networks:
-      - app-network
-
   # Main Application
   app:
     build:
@@ -48,8 +33,6 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-      mock-bureau:
-        condition: service_started
     environment:
       NODE_ENV: production
       PORT: 3000
@@ -65,12 +48,8 @@ services:
       JWT_SECRET: super-secret-jwt-key-for-production-change-this
       JWT_EXPIRATION: 1d
 
-      # Bureau API Configuration
-      BUREAU_API_URL: http://mock-bureau:3001
-      BUREAU_API_KEY: docker-compose-api-key-123
-      BUREAU_TIMEOUT_MS: 10000
-      BUREAU_MAX_RETRIES: 3
-      BUREAU_RETRY_DELAY_MS: 1000
+      # Bureau API Configuration (now internal)
+      BUREAU_API_KEY: mock-api-key-123
 
       # Rate Limiting
       THROTTLE_TTL: 60000

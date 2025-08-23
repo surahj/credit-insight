@@ -1,5 +1,5 @@
 # Use the latest LTS Node.js with Alpine for security and efficiency
-FROM node:20-alpine3.19
+FROM node:20-alpine3.20
 
 # Install security updates and essential packages
 RUN apk update && apk upgrade && \

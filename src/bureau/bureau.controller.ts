@@ -29,7 +29,7 @@ import type { CurrentUserData } from '../common/decorators/current-user.decorato
 export class BureauController {
   constructor(private readonly bureauService: BureauService) {}
 
-  @Post('check')
+  @Post('/check')
   @ApiOperation({ summary: 'Perform credit bureau check' })
   @ApiResponse({
     status: 201,
@@ -49,7 +49,7 @@ export class BureauController {
     return this.bureauService.checkCredit(bureauCheckDto, user.userId);
   }
 
-  @Get('reports')
+  @Get('/reports')
   @ApiOperation({ summary: 'Get user bureau reports (paginated)' })
   @ApiResponse({
     status: 200,
@@ -97,14 +97,5 @@ export class BureauController {
   ): Promise<{ message: string }> {
     await this.bureauService.deleteBureauReport(reportId, user.userId);
     return { message: 'Bureau report deleted successfully' };
-  }
-
-  @Get('health')
-  @ApiOperation({ summary: 'Check bureau service health' })
-  @ApiResponse({ status: 200, description: 'Bureau service health status' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiResponse({ status: 429, description: 'Too many requests' })
-  async getBureauHealth(@CurrentUser() user: CurrentUserData) {
-    return this.bureauService.getBureauHealthStatus();
   }
 }
