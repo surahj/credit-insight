@@ -1,0 +1,102 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: credit-insight-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: credit_insight_db
+      MYSQL_USER: credit_user
+      MYSQL_PASSWORD: credit_password
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - app-network
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  # Mock Credit Bureau API
+  mock-bureau:
+    build:
+      context: ./mock-bureau-api
+      dockerfile: Dockerfile
+    container_name: mock-credit-bureau
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+    ports:
+      - '3001:3001'
+    networks:
+      - app-network
+
+  # Main Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: credit-insight-service
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mock-bureau:
+        condition: service_started
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+
+      # Database Configuration
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: credit_user
+      DB_PASSWORD: credit_password
+      DB_DATABASE: credit_insight_db
+
+      # JWT Configuration
+      JWT_SECRET: super-secret-jwt-key-for-production-change-this
+      JWT_EXPIRATION: 1d
+
+      # Bureau API Configuration
+      BUREAU_API_URL: http://mock-bureau:3001
+      BUREAU_API_KEY: docker-compose-api-key-123
+      BUREAU_TIMEOUT_MS: 10000
+      BUREAU_MAX_RETRIES: 3
+      BUREAU_RETRY_DELAY_MS: 1000
+
+      # Rate Limiting
+      THROTTLE_TTL: 60000
+      THROTTLE_LIMIT: 100
+
+      # Security Configuration
+      ALLOWED_ORIGINS: 'http://localhost:3000,http://localhost:8080'
+      SESSION_SECRET: 'super-secure-session-key-for-production'
+      BCRYPT_ROUNDS: 12
+
+      # File Upload Security
+      MAX_FILE_SIZE: 10485760
+      ALLOWED_FILE_TYPES: 'text/csv,application/csv'
+    ports:
+      - '3000:3000'
+    volumes:
+      - app_uploads:/app/uploads
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
+  app_uploads:
+    driver: local

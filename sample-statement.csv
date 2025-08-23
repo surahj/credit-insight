@@ -1,0 +1,21 @@
+date,description,amount,balance
+2025-01-01,Salary Payment,5000.00,5000.00
+2025-01-02,Grocery Store,-120.50,4879.50
+2025-01-03,Gas Station,-45.00,4834.50
+2025-01-04,Netflix Subscription,-15.99,4818.51
+2025-01-05,Restaurant,-85.00,4733.51
+2025-01-06,Amazon Purchase,-200.00,4533.51
+2025-01-07,Utility Bill,-150.00,4383.51
+2025-01-08,Pharmacy,-25.00,4358.51
+2025-01-09,Interest Payment,15.50,4374.01
+2025-01-10,Transport Ticket,-12.00,4362.01
+2025-01-11,Supermarket,-95.00,4267.01
+2025-01-12,Cinema,-25.00,4242.01
+2025-01-13,Online Shopping,-180.00,4062.01
+2025-01-14,Doctor Visit,-75.00,3987.01
+2025-01-15,Coffee Shop,-8.50,3978.51
+2025-01-16,Insurance Payment,-200.00,3778.51
+2025-01-17,Salary Payment,5000.00,8778.51
+2025-01-18,Grocery Store,-110.00,8668.51
+2025-01-19,Parking Fee,-5.00,8663.51
+2025-01-20,Restaurant,-65.00,8598.51
