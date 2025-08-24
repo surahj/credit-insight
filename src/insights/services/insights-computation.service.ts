@@ -241,7 +241,7 @@ export class InsightsComputationService {
     );
     const totalFees = feeTransactions.reduce((sum, t) => +sum + +t.amount, 0);
     if (totalFees > 100) {
-      riskFlags.push(`High fees charged: $${totalFees.toFixed(2)}`);
+      riskFlags.push(`High fees charged: ${totalFees.toFixed(2)}`);
     }
 
     // Check for low average balance

@@ -112,19 +112,13 @@ A comprehensive backend service for bank statement analysis and credit insights,
 - **Rationale**: Compliance, debugging, data lineage
 - **Implementation**: Base entity class with automatic timestamp management
 
-#### **3. Soft Deletes**
-
-- **Decision**: Implement soft deletes for user data
-- **Rationale**: Data recovery, compliance, audit requirements
-- **Implementation**: `@DeleteDateColumn()` decorator in entities
-
 ### **Testing Strategy**
 
 #### **1. Multi-Level Testing**
 
-- **Decision**: Unit tests, integration tests, and e2e tests
+- **Decision**: Unit tests
 - **Rationale**: Different levels of confidence, catch different types of issues
-- **Implementation**: Jest configuration with separate test suites
+- **Implementation**: Jest configuration with unit test suites
 
 #### **2. Mock External Dependencies**
 
@@ -555,14 +549,6 @@ npm test
 # Run unit tests only
 npm run test:unit
 
-# Run integration tests only
-npm run test:integration
-
-# Run tests with coverage
-npm run test:cov
-
-# Run tests in watch mode
-npm run test:watch
 ```
 
 ### Test Coverage
@@ -576,21 +562,6 @@ The project includes comprehensive tests covering:
 - **Bureau Client**: Tests for retry logic, error handling, and timeout scenarios
 - **CSV Parser**: Tests for parsing and categorizing CSV transactions
 
-#### Integration Tests ✅
-
-- **Happy Path**: End-to-end testing of complete user workflows
-- **Authentication Flow**: User registration, login, and authorization
-- **CSV Upload & Processing**: Complete statement upload and processing pipeline
-- **Insights Computation**: Full insights generation and retrieval
-- **Bureau Integration**: Credit bureau checks with retry scenarios
-- **Error Handling**: Various error conditions and edge cases
-
-### Test Statistics
-
-- **Total Test Suites**: 4
-- **Total Tests**: 55
-- **Pass Rate**: 100% ✅
-- **Coverage Areas**: Income detection, spending buckets, bureau client, CSV parsing
 
 ### Testing Design Decisions
 
